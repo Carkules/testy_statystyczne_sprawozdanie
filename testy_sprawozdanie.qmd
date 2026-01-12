@@ -1,0 +1,21 @@
+---
+title: "Sprawozdanie 2"
+format: pdf
+editor: visual
+---
+
+# Wstęp
+
+## Przyjęte założenia i hipotezy
+
+## Rozważane testy
+
+### Przedział Wilsona
+
+### Przedział Cloppera-Pearsona
+
+### Przedział Jeffreysa
+
+# Przeprowadzenie testów
+
+# Podsumowanie
