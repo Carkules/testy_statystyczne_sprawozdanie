@@ -51,6 +51,23 @@ $$
 Odrzucamy hipotezę zerową $H_0$, jeżeli $0.1 \notin (0, U_W]$ lub równoważnie $0.1 > U_W$.
 
 ### Przedział Cloppera-Pearsona
+Przedział Cloppera-Pearsona oparty jest o dystrybuantę $S \sim \mathcal{B}(n, p)$, która opisana jest równaniem
+$$
+\mathbb{P}(S \leq s) = \sum_{k=0}^s \binom{n}{k}p^k(1-p)^{n-k},
+$$
+gdzie $s$ to liczba sukcesów w obserwowanej próbie. Dla przedziału lewostronnego $(0, U_{CP}]$ szukamy $U_{CP}$ spełniającego
+$$
+\mathbb{P}_{p=U_{CP}}(S\leq s) = 1 - \alpha,
+$$
+zatem górna granica $U_{CP}$ przedziału ufności  jest rozwiązaniem równania
+$$
+\sum_{k=0}^s \binom{n}{k}(U_{CP})^k(1-U_{CP})^{n-k} = 1 - \alpha.
+$$
+Alternatywnie, korzystając z relacji między rozkładem Bernoulliego a rozkładem beta przedział Cloppera-Pearsona możemy zdefiniować za pomocą kwantyli rozkładu beta, wtedy
+$$
+U_{CP} = B(1-\alpha; s+1; n-s),
+$$
+gdzie $B$ oznacza kwantyl rozkładu beta. Odrzucamy hipotezę zerową $H_0$, jeżeli $0.1 \notin (0, U_{CP}]$ lub równoważnie $0.1 > U_{CP}$.
 
 ### Przedział Jeffreysa
 
