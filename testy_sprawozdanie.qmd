@@ -30,7 +30,7 @@ $$
 $$
 Do obliczania przedziałów ufności w R użyjemy funkcji BinomCI z pakietu DescTools.
 
-### Test oparty o przedział Wilsona
+### Przedział Wilsona
 Przedział Wilsona oparty jest na normalnym przybliżeniu rozkładu Bernoulliego tzn.
 $$
 \frac{\hat{p}-p}{\sqrt{p(1-p)/n}} \approx \mathcal{N}(0, 1).
@@ -42,7 +42,7 @@ $$
 
 Lewostronny przedział Wilsona otrzymujemy rozwiązując nierówność
 $$
-\frac{\hat{p}-p}{\sqrt{p(1-p)/n}} \geq -z_{1-\alpha}
+\frac{\hat{p}-\mathbb{E}(\hat{p})}{\sqrt{\text{Var}(\hat{p})}} \approx \mathcal{N}(0, 1) \iff \frac{\hat{p}-p}{\sqrt{p(1-p)/n}} \geq -z_{1-\alpha}
 $$
 Rozwiązując nierówność otrzymujemy przedział ufności $(0, U_W]$, gdzie
 $$
@@ -65,11 +65,25 @@ $$
 $$
 Alternatywnie, korzystając z relacji między rozkładem Bernoulliego a rozkładem beta przedział Cloppera-Pearsona możemy zdefiniować za pomocą kwantyli rozkładu beta, wtedy
 $$
-U_{CP} = B(1-\alpha; s+1; n-s),
+U_{CP} = \text{Beta}^{-1}(1-\alpha; s+1; n-s),
 $$
-gdzie $B$ oznacza kwantyl rozkładu beta. Odrzucamy hipotezę zerową $H_0$, jeżeli $0.1 \notin (0, U_{CP}]$ lub równoważnie $0.1 > U_{CP}$.
+gdzie $\text{Beta}^{-1}$ oznacza kwantyl rozkładu beta. Odrzucamy hipotezę zerową $H_0$, jeżeli $0.1 \notin (0, U_{CP}]$ lub równoważnie $0.1 > U_{CP}$.
 
 ### Przedział Jeffreysa
+Przedział Jeffreysa oparty jest o rozkład Jeffreysa. W przypadku próby z rozkładu Bernoulliego $S \sim \mathcal{B}(n, p)$ zakładamy, że prawdopodobieństwo $p$ ma rozkład 
+$$
+p \sim \text{Beta}\left(\frac{1}{2}, \frac{1}{2}\right).
+$$
+Po zaobserwowaniu w próbie $s$ sukcesów rozkład prawdopodobieństwa wygląda następująco
+$$
+p | s \sim \text{Beta}\left(s+\frac{1}{2}, n - s + \frac{1}{2}  \right).
+$$
+Lewostronny przedział ufności $(0, U_J)$ otrzymamy obliczając kwantyl $1-\alpha$ powyższego rozkładu, zatem
+$$
+U_J = \text{Beta}^{-1}\left(1-\alpha, s+\frac{1}{2}, n - s + \frac{1}{2}  \right).
+$$
+Odrzucamy hipotezę zerową $H_0$, jeżeli $0.1 \notin (0, U_{J}]$ lub równoważnie $0.1 > U_{J}$.
+
 
 # Przeprowadzenie testów
 
