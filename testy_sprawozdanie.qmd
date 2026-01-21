@@ -4,13 +4,51 @@ format: pdf
 editor: visual
 ---
 
-# Wstęp
+# Przyjęte założenia i hipotezy
 
-## Przyjęte założenia i hipotezy
+Rozważamy testy na poziomie istotności $\alpha = 0.05$ do testowania
 
-## Rozważane testy
+-   $H_0: p = 0.1$, przeciwko
 
-### Przedział Wilsona
+-   $H_1: p < 0.1$.
+
+Będziemy wykonywać sprawdzenie tej hipotezy, stosując wprost trzy testy:
+
+1.  testu opartego o przedział Wilsona,
+
+2.  testu opartego o przedział Cloppera-Pearsona,
+
+3.  testu opartego o przedział Jeffreysa.
+
+Testy te będziemy rozważać na próbkach z rozkładu Bernoulliego $S \sim \mathcal{B}(n, p)$. Estymator prawdopodobieństwa $p$ definiujemy przez stosunek liczby sukcesów do liczby prób, zatem
+$$
+\hat{p} = \frac{S}{n}.
+$$
+Dodatkowo z rozkładu wiemy, że
+$$
+\mathbb{E}(\hat{p}) = p, \quad \text{Var}(\hat{p}) = \frac{p(1-p)}{n}
+$$
+Do obliczania przedziałów ufności w R użyjemy funkcji BinomCI z pakietu DescTools.
+
+### Test oparty o przedział Wilsona
+Przedział Wilsona oparty jest na normalnym przybliżeniu rozkładu Bernoulliego tzn.
+$$
+\frac{\hat{p}-p}{\sqrt{p(1-p)/n}} \approx \mathcal{N}(0, 1).
+$$
+Dla przedziału lewostronnego mamy:
+$$
+\mathbb{P}\left(\frac{\hat{p}-p}{\sqrt{p(1-p)/n}} \geq -z_{1-\alpha}\right) \approx 1 - \alpha.
+$$
+
+Lewostronny przedział Wilsona otrzymujemy rozwiązując nierówność
+$$
+\frac{\hat{p}-p}{\sqrt{p(1-p)/n}} \geq -z_{1-\alpha}
+$$
+Rozwiązując nierówność otrzymujemy przedział ufności $(0, U_W]$, gdzie
+$$
+ U_W = \frac{1}{1+ \frac{z_{1-\alpha}^2}{n}}\left(\hat{p}+\frac{z_{1-\alpha}^2}{2n} + z_{1-\alpha}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z_{1-\alpha}^2}{4n^2}}\right)
+$$
+Odrzucamy hipotezę zerową $H_0$, jeżeli $0.1 \notin (0, U_W]$ lub równoważnie $0.1 > U_W$.
 
 ### Przedział Cloppera-Pearsona
 
