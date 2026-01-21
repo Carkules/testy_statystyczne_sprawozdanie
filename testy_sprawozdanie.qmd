@@ -84,6 +84,17 @@ U_J = \text{Beta}^{-1}\left(1-\alpha, s+\frac{1}{2}, n - s + \frac{1}{2}  \right
 $$
 Odrzucamy hipotezę zerową $H_0$, jeżeli $0.1 \notin (0, U_{J}]$ lub równoważnie $0.1 > U_{J}$.
 
+### Test jednostajnie najmocniejszy
+Przeprowadzany przez nas test jest niezrandomizowany, zatem funkcję mocy definiujemy następująco
+$$
+\beta_T(p) = \mathbb{P}_p[T(S) = 1],
+$$
+gdzie $T$ oznacza przeprowadzany test.
+
+Test jest jednostajnie najmocniejszy w danej rodzinie testów przy poziomie istotności $\alpha$, jeśli jest mocniejszy lub niegorszy od dowolnego innego rozważanego testu dla wszystkich wartości zbioru hipotezy alternatywnej, czyli w naszym przypadku dla $p < 0.1$. Inaczej, test $T^*$ jest jednostajnie najmocniejszy w rodzinie testów $\mathcal{T}_\alpha$, jeżeli 
+$$
+\forall_{p < 0.1}\forall_{T\in\mathcal{T}_\alpha}\beta_{T^*}(p) \geq \beta_T(p).
+$$
 
 # Przeprowadzenie testów
 
