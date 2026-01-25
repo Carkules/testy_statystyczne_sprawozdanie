@@ -1,9 +1,5 @@
 library(DescTools)
 
-alpha <- 0.05
-Nmc   <- 10000
-P_seq <- seq(0,1,0.001)
-
 power <- function(n,P=P_seq){
   
   power_wilson <- sapply(P,function(p) {
@@ -63,8 +59,12 @@ draw_power <- function(power_n, zoomx = c(0,1), zoomy = FALSE, alpha = 0.05) {
          lwd=2, lty=c(1,2,4))
 }
 
-
 #symulacja i wykresy,nie odpalaj wzystkiego naraz i ostrożnie :)s
+
+alpha <- 0.05
+Nmc   <- 10000
+P_seq <- seq(0,1,0.001)
+
 
 kompilacja <- FALSE
 wczyatnie <- TRUE
