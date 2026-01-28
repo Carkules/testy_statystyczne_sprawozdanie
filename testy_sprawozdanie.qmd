@@ -100,4 +100,10 @@ $$
 
 # Przeprowadzenie testów
 
+### Testy dla $S \sim \mathcal{B}(5, p)$
+
+### Testy dla $S \sim \mathcal{B}(30, p)$
+
+### Testy dla $S \sim \mathcal{B}(250, p)$
+
 # Podsumowanie
