@@ -3,6 +3,8 @@ title: "Sprawozdanie 2"
 author: "Konrad Słotta i Kacper Łazurkiewicz"
 format: pdf
 editor: visual
+execute:
+  echo: false
 ---
 
 # Przyjęte założenia i hipotezy
@@ -99,11 +101,108 @@ $$
 $$
 
 # Przeprowadzenie testów
+```{r}
+library(DescTools)
 
+alpha <- 0.05
+Nmc   <- 1000
+P_seq <- seq(0,1,0.001)
+
+power <- function(n,P=P_seq){
+  
+  power_wilson <- sapply(P,function(p) {
+    S <- rbinom(Nmc, size = n, prob = p)
+    mean(sapply(S, function(s) {
+      ci <- BinomCI(x = s, n = n, conf.level = 1-alpha, method="wilson")
+      ci[,3] < 0.1
+    }))
+  })
+  
+  power_cp <- sapply(P, function(p) {
+    S <- rbinom(Nmc, size = n, prob = p)
+    mean(sapply(S, function(s) {
+      ci <- BinomCI(x = s, n = n, conf.level = 1-alpha, method="clopper-pearson")
+      ci[,3] < 0.1
+    }))
+  })
+  
+  power_jeff <- sapply(P, function(p) {
+    S <- rbinom(Nmc, size = n, prob = p)
+    mean(sapply(S, function(s) {
+      ci <- BinomCI(x = s, n = n, conf.level = 1-alpha, method="jeffreys")
+      ci[,3] < 0.1
+    }))
+  })
+  
+  list(P = P, power_wilson = power_wilson,
+       power_cp = power_cp, power_jeff = power_jeff)
+}
+
+draw_power <- function(power_n, zoomx = c(0,1), zoomy = FALSE, alpha = 0.05) {
+  
+  idx <- (power_n$P >= zoomx[1]) & (power_n$P <= zoomx[2])
+  P <- power_n$P[idx]
+  power_wilson <- power_n$power_wilson[idx]
+  power_cp     <- power_n$power_cp[idx]
+  power_jeff   <- power_n$power_jeff[idx]
+  
+  ylim_range <- if(zoomy) c(0, 2*alpha) else c(0,1)
+
+  main_text <- sprintf("Funkcje mocy (zoomx = [%.2f, %.2f], zoomy = %s)", 
+                       zoomx[1], zoomx[2], zoomy)
+  
+  plot(P, power_wilson, type="l", lwd=2, lty=1, col="black",
+       ylim=ylim_range, xlab="p", ylab="Moc testu",
+       main=main_text, cex.main=1, adj=0.5)
+  
+  lines(P, power_cp, col="red", lwd=2, lty=2)
+  lines(P, power_jeff, col="blue", lwd=2, lty=4)
+  
+  abline(v=0.1, lty=3, col="darkgrey")  # H0
+  abline(h=alpha, lty=3, col="grey")    # poziom istotności
+  
+  legend("topright",
+         legend=c("Wilson","Clopper-Pearson","Jeffreys"),
+         col=c("black","red","blue"),
+         lwd=2, lty=c(1,2,4))
+}
+
+
+kompilacja <- FALSE
+wczytanie <- TRUE
+zapis <- FALSE
+
+if(kompilacja){
+  power1 <- power(5)
+  power2 <- power(30)
+  power3 <- power(250)
+}
+if(zapis&kompilacja){
+  save(power1, file = "wyniki1_MC.RData")
+  save(power2, file = "wyniki2_MC.RData")
+  save(power3, file = "wyniki3_MC.RData")
+}
+if(wczytanie){
+  load("wyniki1_MC.RData")
+  load("wyniki2_MC.RData")
+  load("wyniki3_MC.RData")
+}
+```
 ### Testy dla $S \sim \mathcal{B}(5, p)$
-
+```{r}
+draw_power(power1, zoomx=c(0,1),zoomy=TRUE)
+```
 ### Testy dla $S \sim \mathcal{B}(30, p)$
+```{r}
+draw_power(power2, zoomx=c(0,1),zoomy=FALSE)
+draw_power(power2, zoomx=c(0,0.25),zoomy=FALSE)
+draw_power(power2, zoomx=c(0,0.25),zoomy=TRUE)
+```
 
 ### Testy dla $S \sim \mathcal{B}(250, p)$
-
+```{r}
+draw_power(power3, zoomx=c(0,1),zoomy=FALSE)
+draw_power(power3, zoomx=c(0.08,0.15),zoomy=FALSE)
+draw_power(power3, zoomx=c(0.08,0.15),zoomy=TRUE)
+```
 # Podsumowanie
