@@ -190,10 +190,14 @@ if(wczytanie){
 ```
 ### Testy dla $S \sim \mathcal{B}(5, p)$
 ```{r}
+#| fig-width: 7
+#| fig-height: 6
 draw_power(power1, zoomx=c(0,1),zoomy=TRUE)
 ```
 ### Testy dla $S \sim \mathcal{B}(30, p)$
 ```{r}
+#| fig-width: 7
+#| fig-height: 6
 draw_power(power2, zoomx=c(0,1),zoomy=FALSE)
 draw_power(power2, zoomx=c(0,0.25),zoomy=FALSE)
 draw_power(power2, zoomx=c(0,0.25),zoomy=TRUE)
@@ -201,6 +205,8 @@ draw_power(power2, zoomx=c(0,0.25),zoomy=TRUE)
 
 ### Testy dla $S \sim \mathcal{B}(250, p)$
 ```{r}
+#| fig-width: 7
+#| fig-height: 6
 draw_power(power3, zoomx=c(0,1),zoomy=FALSE)
 draw_power(power3, zoomx=c(0.08,0.15),zoomy=FALSE)
 draw_power(power3, zoomx=c(0.08,0.15),zoomy=TRUE)
