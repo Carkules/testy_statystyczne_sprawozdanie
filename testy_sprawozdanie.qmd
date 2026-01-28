@@ -5,6 +5,10 @@ format: pdf
 editor: visual
 execute:
   echo: false
+  warning: false
+  message: false
+crossref:
+  fig-title: "Rysunek"
 ---
 
 # Przyjęte założenia i hipotezy
@@ -101,6 +105,7 @@ $$
 $$
 
 # Przeprowadzenie testów
+Teraz korzystając z symulacji Monte Carlo przeprowadzimy testy i wykonamy wykresy funkcji mocy w zależności od $p$ dla różnych wielkości próby $n$.
 ```{r}
 library(DescTools)
 
@@ -138,7 +143,7 @@ power <- function(n,P=P_seq){
        power_cp = power_cp, power_jeff = power_jeff)
 }
 
-draw_power <- function(power_n, zoomx = c(0,1), zoomy = FALSE, alpha = 0.05) {
+draw_power <- function(power_n, zoomx = c(0,1), zoomy = FALSE, alpha = 0.05, title="") {
   
   idx <- (power_n$P >= zoomx[1]) & (power_n$P <= zoomx[2])
   P <- power_n$P[idx]
@@ -148,12 +153,11 @@ draw_power <- function(power_n, zoomx = c(0,1), zoomy = FALSE, alpha = 0.05) {
   
   ylim_range <- if(zoomy) c(0, 2*alpha) else c(0,1)
 
-  main_text <- sprintf("Funkcje mocy (zoomx = [%.2f, %.2f], zoomy = %s)", 
-                       zoomx[1], zoomx[2], zoomy)
+  #main_text <- sprintf(title)
   
   plot(P, power_wilson, type="l", lwd=2, lty=1, col="black",
        ylim=ylim_range, xlab="p", ylab="Moc testu",
-       main=main_text, cex.main=1, adj=0.5)
+       cex.main=1, adj=0.5)
   
   lines(P, power_cp, col="red", lwd=2, lty=2)
   lines(P, power_jeff, col="blue", lwd=2, lty=4)
@@ -190,25 +194,31 @@ if(wczytanie){
 ```
 ### Testy dla $S \sim \mathcal{B}(5, p)$
 ```{r}
+#| label: fig_1
+#| fig-cap: "Wykres funkcji mocy w zależności od p dla n = 5"
 #| fig-width: 7
 #| fig-height: 6
 draw_power(power1, zoomx=c(0,1),zoomy=TRUE)
 ```
 ### Testy dla $S \sim \mathcal{B}(30, p)$
 ```{r}
+#| label: fig_2
+#| fig-cap: "Wykres funkcji mocy w zależności od p dla n = 30"
 #| fig-width: 7
 #| fig-height: 6
 draw_power(power2, zoomx=c(0,1),zoomy=FALSE)
-draw_power(power2, zoomx=c(0,0.25),zoomy=FALSE)
-draw_power(power2, zoomx=c(0,0.25),zoomy=TRUE)
+#draw_power(power2, zoomx=c(0,0.25),zoomy=FALSE)
+#draw_power(power2, zoomx=c(0,0.25),zoomy=TRUE)
 ```
 
 ### Testy dla $S \sim \mathcal{B}(250, p)$
 ```{r}
+#| label: fig_3
+#| fig-cap: "Wykres funkcji mocy w zależności od p dla n = 250"
 #| fig-width: 7
 #| fig-height: 6
 draw_power(power3, zoomx=c(0,1),zoomy=FALSE)
-draw_power(power3, zoomx=c(0.08,0.15),zoomy=FALSE)
-draw_power(power3, zoomx=c(0.08,0.15),zoomy=TRUE)
+#draw_power(power3, zoomx=c(0.08,0.15),zoomy=FALSE)
+#draw_power(power3, zoomx=c(0.08,0.15),zoomy=TRUE)
 ```
 # Podsumowanie
