@@ -180,7 +180,7 @@ if(kompilacja){
   power1 <- power(5)
   power2 <- power(30)
   power3 <- power(250)
-}
+} 
 if(zapis&kompilacja){
   save(power1, file = "wyniki1_MC.RData")
   save(power2, file = "wyniki2_MC.RData")
@@ -200,7 +200,7 @@ if(wczytanie){
 #| fig-height: 6
 draw_power(power1, zoomx=c(0,1),zoomy=TRUE)
 ```
-Na powyższym wykresie możemy zauważyć, że moc wszystkich testów jest praktycznie równa zeru w całym zakresie $p$. Jest to zgodne z teorią, gdyż w tym przypadku pojedynczy sukces zmienia $\hat{p}$ o $0.2$. Przez to natomiast wszystkie te testy nie pozwalają na skuteczne wykrywanie efektu. Hipoteza alternatywna jest zbyt wąska, żeby ją przyjąć przy tak małej liczności próby. Na wykresie widzimy także, że dla $0 \leq p < 0.1$ wszystkie testy pokrywają się, zatem nie istnieje test jednostajnie najmocniejszy.
+Na powyższym wykresie możemy zauważyć, że moc wszystkich testów jest praktycznie równa zeru w całym zakresie $p$. Jest to zgodne z teorią, gdyż w tym przypadku pojedynczy sukces zmienia $\hat{p}$ o $0.2$. Przez to natomiast wszystkie te testy nie pozwalają na skuteczne wykrywanie efektu. Hipoteza alternatywna jest zbyt wąska, żeby ją przyjąć przy tak małej liczności próby. Na wykresie widzimy także, że dla $0 \leq p < 0.1$ wszystkie testy pokrywają się, zatem na podstawie symulacji nie jesteśmy w stanie jednoznacznie wskazać testu jednostajnie najmocniejszego.
 
 ### Testy dla $S \sim \mathcal{B}(30, p)$
 ```{r}
@@ -224,7 +224,7 @@ draw_power(power3, zoomx=c(0,1),zoomy=FALSE)
 #draw_power(power3, zoomx=c(0.08,0.15),zoomy=FALSE)
 #draw_power(power3, zoomx=c(0.08,0.15),zoomy=TRUE)
 ```
-Na powyższym wykresie widzimy, że testy oparte o przedział Wilsona i Cloppera-Pearsona także przybrały taki sam kształt jak test oparty o przedział Jeffreysa na poprzednim wykresie. Teraz moc wszystkich testów maleje od $1$ do $0$ i wszystkie zachowują przyjęty poziom istotności $\alpha = 0.05$. Krzywe pokrywają się w przybliżeniu do błędu symulacji Monte Carlo. Stąd, w tym przypadku nie istnieje test jednostajnie najmocniejszy, natomiast w przeciwieństwie do przypadku $n = 5$ tutaj każdy test zwróci zgodny z założeniami wynik.
+Na powyższym wykresie widzimy, że testy oparte o przedział Wilsona i Cloppera-Pearsona także przybrały taki sam kształt jak test oparty o przedział Jeffreysa na poprzednim wykresie. Teraz moc wszystkich testów maleje od $1$ do $0$ i wszystkie zachowują przyjęty poziom istotności $\alpha = 0.05$. Krzywe pokrywają się w przybliżeniu do błędu symulacji Monte Carlo. Stąd, w tym przypadku nie jesteśmy w stanie wskazać testu jednostajnie najmocniejszego, natomiast w przeciwieństwie do przypadku $n = 5$ tutaj każdy test zwróci zgodny z założeniami wynik.
 
 # Podsumowanie
 Podsumowując analizę testów pod względem funkcji mocy możemy stwierdzić, kiedy używanie których testów daje najbardziej miarodajne wyniki.
