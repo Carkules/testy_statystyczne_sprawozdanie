@@ -97,7 +97,7 @@ Przeprowadzany przez nas test jest niezrandomizowany, zatem funkcję mocy defini
 $$
 \beta_T(p) = \mathbb{P}_p[T(S) = 1],
 $$
-gdzie $T$ oznacza przeprowadzany test.
+gdzie $T$ oznacza przeprowadzany test. Inaczej, funkcja mocy oznacza prawdopodobieństwo odrzucenia hipotezy zerowej $H_0$.
 
 Test jest jednostajnie najmocniejszy w danej rodzinie testów przy poziomie istotności $\alpha$, jeśli jest mocniejszy lub niegorszy od dowolnego innego rozważanego testu dla wszystkich wartości zbioru hipotezy alternatywnej, czyli w naszym przypadku dla $p < 0.1$. Inaczej, test $T^*$ jest jednostajnie najmocniejszy w rodzinie testów $\mathcal{T}_\alpha$, jeżeli 
 $$
@@ -105,7 +105,7 @@ $$
 $$
 
 # Przeprowadzenie testów
-Teraz korzystając z symulacji Monte Carlo przeprowadzimy testy i wykonamy wykresy funkcji mocy w zależności od $p$ dla różnych wielkości próby $n$.
+Teraz korzystając z symulacji Monte Carlo przeprowadzimy testy i wykonamy wykresy funkcji mocy w zależności od $p$ dla różnych wielkości próby $n$. W każdym przypadku sprawdzimy czy istnieje test jednostajnie najmocniejszy spośród rozważanych testów.
 ```{r}
 library(DescTools)
 
@@ -195,30 +195,42 @@ if(wczytanie){
 ### Testy dla $S \sim \mathcal{B}(5, p)$
 ```{r}
 #| label: fig_1
-#| fig-cap: "Wykres funkcji mocy w zależności od p dla n = 5"
+#| fig-cap: "Wykres funkcji mocy w zależności od $p$ dla $n = 5$"
 #| fig-width: 7
 #| fig-height: 6
 draw_power(power1, zoomx=c(0,1),zoomy=TRUE)
 ```
+Na powyższym wykresie możemy zauważyć, że moc wszystkich testów jest praktycznie równa zeru w całym zakresie $p$. Jest to zgodne z teorią, gdyż w tym przypadku pojedynczy sukces zmienia $\hat{p}$ o $0.2$. Przez to natomiast wszystkie te testy nie pozwalają na skuteczne wykrywanie efektu. Hipoteza alternatywna jest zbyt wąska, żeby ją przyjąć przy tak małej liczności próby. Na wykresie widzimy także, że dla $0 \leq p < 0.1$ wszystkie testy pokrywają się, zatem nie istnieje test jednostajnie najmocniejszy.
+
 ### Testy dla $S \sim \mathcal{B}(30, p)$
 ```{r}
 #| label: fig_2
-#| fig-cap: "Wykres funkcji mocy w zależności od p dla n = 30"
+#| fig-cap: "Wykres funkcji mocy w zależności od $p$ dla $n = 30$"
 #| fig-width: 7
 #| fig-height: 6
 draw_power(power2, zoomx=c(0,1),zoomy=FALSE)
 #draw_power(power2, zoomx=c(0,0.25),zoomy=FALSE)
 #draw_power(power2, zoomx=c(0,0.25),zoomy=TRUE)
 ```
+Dla większej liczności próby zaczynamy zauważać różnice między testami. Moc testu opartego na przedziale Jeffreysa gwałtownie maleje od $1$ do $0$. Dodatkowo, krzywa mocy tego testu w przybliżeniu zawiera punkt $(0.1, 0.05)$. Oznacza to, że $H_0$ odrzucane jest z prawdopodobieństwem $0.05$, co jest zgodne z naszym założeniem dotyczącym poziomu istotności testu. Moc testu opartego o przedział Wilsona i Cloppera-Pearsona podobnie jak dla $n = 5$ jest bliska $0$ dla każdego $p$. Oznacza to, że dla tych dwóch testów liczność próby $n$ jest ciągle zbyt mała, żeby odrzucić $H_0$.  Patrząc na wartości mocy dla $0 \leq p < 0.1$ widzimy, że moc testu opartego o przedział Jeffreysa jest większa od dwóch pozostałych testów. Stąd wnioskujemy, że w tym przypadku test oparty o przedział Jeffreysa jest jednostajnie najmocniejszy spośród rozważanych testów.
 
 ### Testy dla $S \sim \mathcal{B}(250, p)$
 ```{r}
 #| label: fig_3
-#| fig-cap: "Wykres funkcji mocy w zależności od p dla n = 250"
+#| fig-cap: "Wykres funkcji mocy w zależności od $p$ dla $n = 250$"
 #| fig-width: 7
 #| fig-height: 6
 draw_power(power3, zoomx=c(0,1),zoomy=FALSE)
 #draw_power(power3, zoomx=c(0.08,0.15),zoomy=FALSE)
 #draw_power(power3, zoomx=c(0.08,0.15),zoomy=TRUE)
 ```
+Na powyższym wykresie widzimy, że testy oparte o przedział Wilsona i Cloppera-Pearsona także przybrały taki sam kształt jak test oparty o przedział Jeffreysa na poprzednim wykresie. Teraz moc wszystkich testów maleje od $1$ do $0$ i wszystkie zachowują przyjęty poziom istotności $\alpha = 0.05$. Krzywe pokrywają się w przybliżeniu do błędu symulacji Monte Carlo. Stąd, w tym przypadku nie istnieje test jednostajnie najmocniejszy, natomiast w przeciwieństwie do przypadku $n = 5$ tutaj każdy test zwróci zgodny z założeniami wynik.
+
 # Podsumowanie
+Podsumowując analizę testów pod względem funkcji mocy możemy stwierdzić, kiedy używanie których testów daje najbardziej miarodajne wyniki.
+
+- Dla bardzo małej liczności próby, tak jak w przypadku $n = 5$, wszystkie rozważane testy mają bardzo niską moc i są mało informatywne. Żeby uzyskać test o sensownej mocy i realnie wykrywający efekt, należy zwiększyć $n$.
+
+- Dla trochę większej liczności próby, tak jak w przypadku $n = 30$, powinniśmy zastosować test oparty o przedział Jeffreysa, gdyż jest on jednostajnie najmocniejszy spośród rozważanych testów. Dla pozostałych testów liczność próby ciągle jest zbyt mała.
+
+- Dla dużej liczności próby, tak jak w przypadku $n = 250$, każdy test będzie dobrym wyborem i zwróci zgodny z założeniami wynik.
