@@ -3,6 +3,8 @@ title: "Sprawozdanie 2"
 author: "Konrad Słotta i Kacper Łazurkiewicz"
 format: pdf
 editor: visual
+bibliography: testy_sprawozdanie.bib
+nocite: "@*"
 execute:
   echo: false
   warning: false
@@ -209,8 +211,6 @@ Na powyższym wykresie możemy zauważyć, że moc wszystkich testów jest prakt
 #| fig-width: 7
 #| fig-height: 6
 draw_power(power2, zoomx=c(0,1),zoomy=FALSE)
-#draw_power(power2, zoomx=c(0,0.25),zoomy=FALSE)
-#draw_power(power2, zoomx=c(0,0.25),zoomy=TRUE)
 ```
 Dla większej liczności próby zaczynamy zauważać różnice między testami. Moc testu opartego na przedziale Jeffreysa gwałtownie maleje od $1$ do $0$. Dodatkowo, krzywa mocy tego testu w przybliżeniu zawiera punkt $(0.1, 0.05)$. Oznacza to, że $H_0$ odrzucane jest z prawdopodobieństwem $0.05$, co jest zgodne z naszym założeniem dotyczącym poziomu istotności testu. Moc testu opartego o przedział Wilsona i Cloppera-Pearsona podobnie jak dla $n = 5$ jest bliska $0$ dla każdego $p$. Oznacza to, że dla tych dwóch testów liczność próby $n$ jest ciągle zbyt mała, żeby odrzucić $H_0$.  Patrząc na wartości mocy dla $0 \leq p < 0.1$ widzimy, że moc testu opartego o przedział Jeffreysa jest większa od dwóch pozostałych testów. Stąd wnioskujemy, że w tym przypadku test oparty o przedział Jeffreysa jest jednostajnie najmocniejszy spośród rozważanych testów.
 
@@ -221,8 +221,6 @@ Dla większej liczności próby zaczynamy zauważać różnice między testami. 
 #| fig-width: 7
 #| fig-height: 6
 draw_power(power3, zoomx=c(0,1),zoomy=FALSE)
-#draw_power(power3, zoomx=c(0.08,0.15),zoomy=FALSE)
-#draw_power(power3, zoomx=c(0.08,0.15),zoomy=TRUE)
 ```
 Na powyższym wykresie widzimy, że testy oparte o przedział Wilsona i Cloppera-Pearsona także przybrały taki sam kształt jak test oparty o przedział Jeffreysa na poprzednim wykresie. Teraz moc wszystkich testów maleje od $1$ do $0$ i wszystkie zachowują przyjęty poziom istotności $\alpha = 0.05$. Krzywe pokrywają się w przybliżeniu do błędu symulacji Monte Carlo. Stąd, w tym przypadku nie jesteśmy w stanie wskazać testu jednostajnie najmocniejszego, natomiast w przeciwieństwie do przypadku $n = 5$ tutaj każdy test zwróci zgodny z założeniami wynik.
 
@@ -234,3 +232,5 @@ Podsumowując analizę testów pod względem funkcji mocy możemy stwierdzić, k
 - Dla trochę większej liczności próby, tak jak w przypadku $n = 30$, powinniśmy zastosować test oparty o przedział Jeffreysa, gdyż jest on jednostajnie najmocniejszy spośród rozważanych testów. Dla pozostałych testów liczność próby ciągle jest zbyt mała.
 
 - Dla dużej liczności próby, tak jak w przypadku $n = 250$, każdy test będzie dobrym wyborem i zwróci zgodny z założeniami wynik.
+
+# Bibliografia
